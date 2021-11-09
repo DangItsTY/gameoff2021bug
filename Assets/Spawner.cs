@@ -15,7 +15,8 @@ public class Spawner : MonoBehaviour
     }
     void Spawn()
     {
-        Instantiate(original, position, Quaternion.identity);
+        GameObject newObject = Instantiate(original, position, Quaternion.identity);
+        newObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-5f, 0f);
     }
     // Update is called once per frame
     void Update()

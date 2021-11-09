@@ -24,4 +24,26 @@ public class Grandola : MonoBehaviour
         float vy = Input.GetButtonDown("Jump") ? jumpSpeed : rb.velocity.y;
         rb.velocity = new Vector2(vx, vy);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Debug.Log("collided " + collision.gameObject.name);
+        if (collision.gameObject.name == "GrasshopperPlatform" || collision.gameObject.name == "Grasshopper")
+        {
+            //Debug.Log("collided " + collision.gameObject.name);
+            //rb.position = new Vector2(collision.rigidbody.position.x, collision.rigidbody.position.y);
+            //rb.velocity = new Vector2(rb.velocity.x, collision.rigidbody.velocity.y);
+            //collision.rigidbody.velocity = new Vector2(collision.rigidbody.velocity.x, collision.rigidbody.velocity.y);
+            //collision.rigidbody.velocity = new Vector2(0f, 0f);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Debug.Log("triggered " + collision.gameObject.name);
+        if (collision.gameObject.name == "GrasshopperPlatform" || collision.gameObject.name == "Grasshopper")
+        {
+            //Debug.Log("triggered " + collision.gameObject.name);
+        }
+    }
 }
