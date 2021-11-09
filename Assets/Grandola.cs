@@ -31,13 +31,24 @@ public class Grandola : MonoBehaviour
         if (collision.gameObject.name == "GrasshopperPlatform" || collision.gameObject.name == "Grasshopper")
         {
             //Debug.Log("collided " + collision.gameObject.name);
-            //rb.position = new Vector2(collision.rigidbody.position.x, collision.rigidbody.position.y);
+
+            //rb.position = collision.rigidbody.position;
+            
             //rb.velocity = new Vector2(rb.velocity.x, collision.rigidbody.velocity.y);
             //collision.rigidbody.velocity = new Vector2(collision.rigidbody.velocity.x, collision.rigidbody.velocity.y);
             //collision.rigidbody.velocity = new Vector2(0f, 0f);
         }
     }
-
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "GrasshopperPlatform" || collision.gameObject.name == "Grasshopper")
+        {
+            //Debug.Log("triggered " + collision.gameObject.name);
+            Rigidbody2D rbCol = collision.GetComponent<Rigidbody2D>();
+            rb.position = new Vector2(rbCol.position.x, rbCol.position.y + 0.5f);
+            rb.velocity = new Vector2(0.0f, 0.0f);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("triggered " + collision.gameObject.name);
