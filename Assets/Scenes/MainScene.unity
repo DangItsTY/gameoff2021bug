@@ -785,6 +785,7 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   start: 2
   frequency: 1000
+  vx: 2
 --- !u!1 &1412298181
 GameObject:
   m_ObjectHideFlags: 0

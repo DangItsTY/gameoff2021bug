@@ -22,14 +22,29 @@ public class Grandola : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // trying with force
+        if (Input.GetAxis("Horizontal") != 0f)
+        {
+            vx = Input.GetAxis("Horizontal") * speed;
+            rb.AddForce(new Vector2(vx, 0.0f), ForceMode2D.Force);
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            vy = jumpSpeed;
+            rb.AddForce(new Vector2(0.0f, vy), ForceMode2D.Impulse);
+        }
+        
+        /*
+        // old - directly modified velocity
         if (Input.GetAxisRaw("Horizontal") != 0f)
         {
-            vx = Input.GetAxisRaw("Horizontal") * speed;
+            vx = Input.GetAxis("Horizontal") * speed;
             vx += rb.velocity.x; // preserve vx
             vx = Mathf.Abs(vx) > speed ? speed * Mathf.Sign(vx) : vx; // cap at max speed
         }
         float vy = Input.GetButtonDown("Jump") ? jumpSpeed : rb.velocity.y;
         rb.velocity = new Vector2(vx, vy);
+        */
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
