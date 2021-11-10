@@ -10,6 +10,8 @@ public class Grandola : MonoBehaviour
     // Object Properties
     private float jumpSpeed = 7f;
     private float speed = 4f;
+    private float vx;
+    private float vy;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +22,12 @@ public class Grandola : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float vx = Input.GetAxisRaw("Horizontal") * speed;
+        if (Input.GetAxisRaw("Horizontal") != 0f)
+        {
+            vx = Input.GetAxisRaw("Horizontal") * speed;
+            vx += rb.velocity.x; // preserve vx
+            vx = Mathf.Abs(vx) > speed ? speed * Mathf.Sign(vx) : vx; // cap at max speed
+        }
         float vy = Input.GetButtonDown("Jump") ? jumpSpeed : rb.velocity.y;
         rb.velocity = new Vector2(vx, vy);
     }
@@ -45,8 +52,10 @@ public class Grandola : MonoBehaviour
         {
             //Debug.Log("triggered " + collision.gameObject.name);
             Rigidbody2D rbCol = collision.GetComponent<Rigidbody2D>();
-            rb.position = new Vector2(rbCol.position.x, rbCol.position.y + 0.5f);
-            rb.velocity = new Vector2(0.0f, 0.0f);
+            //rb.position = new Vector2(rbCol.position.x, rbCol.position.y + 0.5f);
+            rb.position = new Vector2(rb.position.x, rbCol.position.y + 0.5f);
+            //rb.velocity = new Vector2(0.0f, 0.0f);
+            //rb.velocity = new Vector2(0.0f, 0.0f);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
