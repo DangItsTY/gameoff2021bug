@@ -66,9 +66,33 @@ public class Grandola : MonoBehaviour
         if (collision.gameObject.name == "GrasshopperPlatform" || collision.gameObject.name == "Grasshopper")
         {
             //Debug.Log("triggered " + collision.gameObject.name);
+
+            Rigidbody2D[] cols = collision.GetComponentsInParent<Rigidbody2D>();
+            Rigidbody2D colP = null;
+            foreach (Rigidbody2D e in cols)
+            {
+                if (e.gameObject.name == "Grasshopper")
+                {
+                    colP = e;
+                    break;
+                }
+            }
+            if (colP == null)
+            {
+                Debug.Log("could not find the parent grasshopper");
+                return;
+            }
+
             Rigidbody2D rbCol = collision.GetComponent<Rigidbody2D>();
-            //rb.position = new Vector2(rbCol.position.x, rbCol.position.y + 0.5f);
             rb.position = new Vector2(rb.position.x, rbCol.position.y + 0.5f);
+            if (Mathf.Abs(rb.velocity.x) < Mathf.Abs(colP.velocity.x))
+            {
+                //Debug.Log("speed other " + colP.velocity.x);
+                rb.velocity = new Vector2(colP.velocity.x, rb.velocity.y);
+            }
+
+            //rb.position = new Vector2(rbCol.position.x, rbCol.position.y + 0.5f);
+
             //rb.velocity = new Vector2(0.0f, 0.0f);
             //rb.velocity = new Vector2(0.0f, 0.0f);
         }
