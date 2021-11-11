@@ -63,10 +63,12 @@ public class Grandola : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "GrasshopperPlatform" || collision.gameObject.name == "Grasshopper")
+        // grasshopper platform
+        if (collision.gameObject.name == "GrasshopperPlatform")
         {
             //Debug.Log("triggered " + collision.gameObject.name);
 
+            // ride grasshopper
             Rigidbody2D[] cols = collision.GetComponentsInParent<Rigidbody2D>();
             Rigidbody2D colP = null;
             foreach (Rigidbody2D e in cols)
@@ -95,6 +97,15 @@ public class Grandola : MonoBehaviour
 
             //rb.velocity = new Vector2(0.0f, 0.0f);
             //rb.velocity = new Vector2(0.0f, 0.0f);
+        }
+        // grasshopper
+        if (collision.gameObject.name == "Grasshopper")
+        {
+            // jump kill grasshopper
+            if (Input.GetButtonDown("Jump"))
+            {
+                Destroy(collision.gameObject);
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
