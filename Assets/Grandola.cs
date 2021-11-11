@@ -13,6 +13,9 @@ public class Grandola : MonoBehaviour
     private float vx;
     private float vy;
 
+    // Controls
+    private bool jumpReady = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +31,11 @@ public class Grandola : MonoBehaviour
             vx = Input.GetAxis("Horizontal") * speed;
             rb.AddForce(new Vector2(vx, 0.0f), ForceMode2D.Force);
         }
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump") && jumpReady)
         {
             vy = jumpSpeed;
             rb.AddForce(new Vector2(0.0f, vy), ForceMode2D.Impulse);
+            jumpReady = false;
         }
         
         /*
@@ -59,6 +63,24 @@ public class Grandola : MonoBehaviour
             //rb.velocity = new Vector2(rb.velocity.x, collision.rigidbody.velocity.y);
             //collision.rigidbody.velocity = new Vector2(collision.rigidbody.velocity.x, collision.rigidbody.velocity.y);
             //collision.rigidbody.velocity = new Vector2(0f, 0f);
+        }
+        // ready jump if on a floor or platform
+        if (collision.gameObject.name == "Floor" || collision.gameObject.name == "GrasshopperPlatform")
+        {
+            jumpReady = true;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Debug.Log("triggered " + collision.gameObject.name);
+        if (collision.gameObject.name == "GrasshopperPlatform" || collision.gameObject.name == "Grasshopper")
+        {
+            //Debug.Log("triggered " + collision.gameObject.name);
+        }
+        // ready jump if on a floor or platform
+        if (collision.gameObject.name == "Floor" || collision.gameObject.name == "GrasshopperPlatform")
+        {
+            jumpReady = true;
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -106,14 +128,6 @@ public class Grandola : MonoBehaviour
             {
                 Destroy(collision.gameObject);
             }
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Debug.Log("triggered " + collision.gameObject.name);
-        if (collision.gameObject.name == "GrasshopperPlatform" || collision.gameObject.name == "Grasshopper")
-        {
-            //Debug.Log("triggered " + collision.gameObject.name);
         }
     }
 }
