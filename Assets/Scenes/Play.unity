@@ -914,10 +914,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72260a0fd4e0ce44f8aa9057d83d2084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  original: {fileID: 27586421}
+  original: {fileID: 1412298181}
   position: {x: 0, y: 0}
   start: 2
-  frequency: 2000
+  frequency: 2
   vx: 2
 --- !u!1 &1412298181
 GameObject:
