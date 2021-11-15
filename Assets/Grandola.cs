@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Grandola : MonoBehaviour
 {
@@ -82,6 +83,11 @@ public class Grandola : MonoBehaviour
         {
             jumpReady = true;
         }
+        // hurt player
+        if (collision.gameObject.name == "KillerGrasshopper")
+        {
+            death();
+        }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -129,5 +135,9 @@ public class Grandola : MonoBehaviour
                 Destroy(collision.gameObject);
             }
         }
+    }
+    private void death()
+    {
+        SceneManager.LoadScene("Thankyou");
     }
 }
