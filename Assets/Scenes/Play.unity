@@ -919,7 +919,7 @@ MonoBehaviour:
   original: {fileID: 27586421}
   position: {x: 0, y: 0}
   start: 2
-  frequency: 2000
+  frequency: 2
   vx: 2
 --- !u!1 &1012523781
 GameObject:

@@ -13,6 +13,7 @@ public class Grandola : MonoBehaviour
     private float speed = 4f;
     private float vx;
     private float vy;
+    private GameObject grasshopper = null;
 
     // Controls
     private bool jumpReady = false;
@@ -36,6 +37,7 @@ public class Grandola : MonoBehaviour
             vy = jumpSpeed;
             rb.AddForce(new Vector2(0.0f, vy), ForceMode2D.Impulse);
             jumpReady = false;
+            grasshopper = null;
         }
     }
 
@@ -66,42 +68,45 @@ public class Grandola : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         // grasshopper platform
-        if (collision.gameObject.name == "GrasshopperPlatform")
+        if (collision.gameObject.name == "GrasshopperPlatform" || grasshopper != null)
         {
             //Debug.Log("triggered " + collision.gameObject.name);
 
             // ride grasshopper
-            Rigidbody2D[] cols = collision.GetComponentsInParent<Rigidbody2D>();
-            Rigidbody2D colP = null;
-            foreach (Rigidbody2D e in cols)
+            if (grasshopper == null)
             {
-                if (e.gameObject.name == "Grasshopper" || e.gameObject.name == "KillerGrasshopper")
+                Rigidbody2D[] cols = collision.GetComponentsInParent<Rigidbody2D>();
+                Rigidbody2D colP = null;
+                foreach (Rigidbody2D e in cols)
                 {
-                    colP = e;
-                    break;
+                    if (e.gameObject.name == "Grasshopper" || e.gameObject.name == "KillerGrasshopper")
+                    {
+                        colP = e;
+                        break;
+                    }
                 }
-            }
-            if (colP == null)
-            {
-                Debug.Log("could not find the parent grasshopper");
-                return;
+                if (colP == null)
+                {
+                    Debug.Log("could not find the parent grasshopper");
+                    return;
+                }
+                grasshopper = colP.gameObject;
             }
 
-            Rigidbody2D rbCol = collision.GetComponent<Rigidbody2D>();
-            rb.position = new Vector2(rb.position.x, colP.position.y + 1.0f);
-            if (Mathf.Abs(rb.velocity.x) < Mathf.Abs(colP.velocity.x))
+            Rigidbody2D rbCol = grasshopper.GetComponent<Rigidbody2D>();
+            rb.position = new Vector2(rb.position.x, rbCol.position.y + 1.0f);
+            if (Mathf.Abs(rb.velocity.x) < Mathf.Abs(rbCol.velocity.x))
             {
-                rb.velocity = new Vector2(colP.velocity.x, rb.velocity.y);
+                rb.velocity = new Vector2(rbCol.velocity.x, rb.velocity.y);
             }
         }
-        // grasshopper
-        if (collision.gameObject.name == "Grasshopper" || collision.gameObject.name == "KillerGrasshopper")
+        // jump kill grasshopper
+        if (grasshopper != null)
         {
-            // jump kill grasshopper
             if (Input.GetButtonDown("Jump"))
             {
-                Debug.Log("Kill");
-                //Destroy(collision.gameObject);
+                //Debug.Log("Kill");
+                Destroy(collision.gameObject);
             }
         }
     }
