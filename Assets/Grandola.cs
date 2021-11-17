@@ -84,8 +84,9 @@ public class Grandola : MonoBehaviour
             jumpReady = true;
         }
         // hurt player
-        if (collision.gameObject.name == "KillerGrasshopper")
+        if (collision.gameObject.tag == "Hitbox")
         {
+            //Debug.Log("Hit!");
             death();
         }
     }
@@ -101,7 +102,7 @@ public class Grandola : MonoBehaviour
             Rigidbody2D colP = null;
             foreach (Rigidbody2D e in cols)
             {
-                if (e.gameObject.name == "Grasshopper")
+                if (e.gameObject.name == "Grasshopper" || e.gameObject.name == "KillerGrasshopper")
                 {
                     colP = e;
                     break;
