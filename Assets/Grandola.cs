@@ -86,7 +86,7 @@ public class Grandola : MonoBehaviour
         if (collision.gameObject.tag == "Hitbox")
         {
             //Debug.Log("Hit!");
-            death();
+            //death();
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
