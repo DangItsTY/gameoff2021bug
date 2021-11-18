@@ -106,7 +106,7 @@ public class Grandola : MonoBehaviour
             if (Input.GetButtonDown("Jump"))
             {
                 //Debug.Log("Kill");
-                Destroy(collision.gameObject);
+                Destroy(grasshopper);
             }
         }
     }
