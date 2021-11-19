@@ -36,9 +36,23 @@ public class Grandola : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump") && jumpReady)
         {
+            // jump
             vy = jumpSpeed;
             rb.AddForce(new Vector2(0.0f, vy), ForceMode2D.Impulse);
             jumpReady = false;
+
+            // jump kill grasshopper
+            if (grasshopper != null)
+            {
+                Debug.Log("Kill");
+                //Destroy(grasshopper);
+                int combo = PlayerPrefs.GetInt("combo");
+                PlayerPrefs.SetInt("combo", combo + 1);
+                int score = PlayerPrefs.GetInt("score");
+                PlayerPrefs.SetInt("score", score + (1 * combo));
+            }
+
+            // always reset grasshopper on a jump
             grasshopper = null;
         }
     }
@@ -54,24 +68,6 @@ public class Grandola : MonoBehaviour
         if (collision.gameObject.name == "Floor")
         {
             PlayerPrefs.SetInt("combo", 1);
-        }
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        // jump kill grasshopper
-        if (grasshopper != null)
-        {
-            if (Input.GetButtonDown("Jump"))
-            {
-                //Debug.Log("Kill");
-                Destroy(grasshopper);
-                grasshopper = null;
-                //Debug.Log(grasshopper);
-                int combo = PlayerPrefs.GetInt("combo");
-                PlayerPrefs.SetInt("combo", combo + 1);
-                int score = PlayerPrefs.GetInt("score");
-                PlayerPrefs.SetInt("score", score + (1 * combo));
-            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
