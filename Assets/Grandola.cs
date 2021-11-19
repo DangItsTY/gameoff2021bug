@@ -56,6 +56,18 @@ public class Grandola : MonoBehaviour
             grasshopper = null;
         }
     }
+    private void FixedUpdate()
+    {
+        // ride grasshopper physics
+        if (grasshopper != null)
+        {
+            Rigidbody2D rbCol = grasshopper.GetComponent<Rigidbody2D>();
+            rb.position = new Vector2(rb.position.x, rbCol.position.y + 1.0f);
+
+            float vx = Mathf.Abs(rb.velocity.x) < Mathf.Abs(rbCol.velocity.x) ? rbCol.velocity.x : rb.velocity.x;
+            rb.velocity = new Vector2(vx, rbCol.velocity.y);
+        }
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -111,13 +123,6 @@ public class Grandola : MonoBehaviour
                     return;
                 }
                 grasshopper = colP.gameObject;
-            }
-
-            Rigidbody2D rbCol = grasshopper.GetComponent<Rigidbody2D>();
-            rb.position = new Vector2(rb.position.x, rbCol.position.y + 1.0f);
-            if (Mathf.Abs(rb.velocity.x) < Mathf.Abs(rbCol.velocity.x))
-            {
-                rb.velocity = new Vector2(rbCol.velocity.x, rb.velocity.y);
             }
         }
     }
