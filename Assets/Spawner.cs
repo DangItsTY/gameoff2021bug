@@ -40,7 +40,7 @@ public class Spawner : MonoBehaviour
         CancelInvoke("Spawn");
         interval = (rate * Time.timeSinceLevelLoad) + rateStart;
         interval = interval < 1.0f ? 1.0f : interval;
-        Debug.Log(interval);
+        //Debug.Log(interval);
         position = spawnPoints[Random.Range(0, 16)];
         GameObject newObject = Instantiate(original, position, Quaternion.identity);
         newObject.name = original.name;

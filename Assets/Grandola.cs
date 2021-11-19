@@ -55,8 +55,8 @@ public class Grandola : MonoBehaviour
             // jump kill grasshopper
             if (grasshopper != null)
             {
-                Debug.Log("Kill");
-                //Destroy(grasshopper);
+                //Debug.Log("Kill");
+                Destroy(grasshopper);
                 int combo = PlayerPrefs.GetInt("combo");
                 PlayerPrefs.SetInt("combo", combo + 1);
                 int score = PlayerPrefs.GetInt("score");
@@ -119,40 +119,16 @@ public class Grandola : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("triggered " + collision.gameObject.name);
+        if (collision.gameObject.name == "Grasshopper" || collision.gameObject.name == "KillerGrasshopper")
+        {
+            grasshopper = collision.gameObject;
+            jumpReady = true; // enable jump even while "inside" a grasshopper
+        }
         // hurt player
         if (!invulnerable && collision.gameObject.tag == "Hitbox")
         {
             //Debug.Log("Hit!");
-            //death();
-        }
-    }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        // grasshopper platform
-        if (collision.gameObject.name == "GrasshopperPlatform" || grasshopper != null)
-        {
-            //Debug.Log("triggered " + collision.gameObject.name);
-
-            // ride grasshopper
-            if (grasshopper == null)
-            {
-                Rigidbody2D[] cols = collision.GetComponentsInParent<Rigidbody2D>();
-                Rigidbody2D colP = null;
-                foreach (Rigidbody2D e in cols)
-                {
-                    if (e.gameObject.name == "Grasshopper" || e.gameObject.name == "KillerGrasshopper")
-                    {
-                        colP = e;
-                        break;
-                    }
-                }
-                if (colP == null)
-                {
-                    Debug.Log("could not find the parent grasshopper");
-                    return;
-                }
-                grasshopper = colP.gameObject;
-            }
+            death();
         }
     }
     private void death()
