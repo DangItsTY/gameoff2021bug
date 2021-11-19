@@ -14,6 +14,7 @@ public class Grandola : MonoBehaviour
     private float vx;
     private float vy;
     private GameObject grasshopper = null;
+    private bool invulnerable = false;
 
     // Controls
     private bool jumpReady = false;
@@ -55,6 +56,13 @@ public class Grandola : MonoBehaviour
             // always reset grasshopper on a jump
             grasshopper = null;
         }
+        if (rb.velocity.y > 0)
+        {
+            invulnerable = true;
+        } else
+        {
+            invulnerable = false;
+        }
     }
     private void FixedUpdate()
     {
@@ -91,9 +99,9 @@ public class Grandola : MonoBehaviour
             jumpReady = true;
         }
         // hurt player
-        if (collision.gameObject.tag == "Hitbox")
+        if (!invulnerable && collision.gameObject.tag == "Hitbox")
         {
-            //Debug.Log("Hit!");
+            Debug.Log("Hit!");
             //death();
         }
     }
