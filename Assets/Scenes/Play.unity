@@ -921,11 +921,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72260a0fd4e0ce44f8aa9057d83d2084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  original: {fileID: 1747141522250665523, guid: c671a04ecbff86e42a10de244fe62b0b, type: 3}
+  original: {fileID: 1619665239140244472, guid: b7385a2fa0380de4abb814eb81e8475b, type: 3}
   position: {x: 0, y: 0}
   start: 2
   frequency: 6
-  vx: 2
   rate: -0.027777778
   rateStart: 6
 --- !u!1 &1012523781

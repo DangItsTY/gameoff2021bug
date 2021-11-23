@@ -8,7 +8,6 @@ public class Spawner : MonoBehaviour
     public Vector2 position;
     public float start;
     public float frequency;
-    public float vx = 2f;
     public float rate = -5.0f / 180.0f;
     public float rateStart = 6.0f;
     private float interval;
@@ -30,9 +29,17 @@ public class Spawner : MonoBehaviour
         new Vector2(5.0f, -3.0f),
         new Vector2(7.0f, -3.0f),
     };
+    private GameObject[] spawners = new GameObject[16];
+    private Animator[] spawnerAnimators = new Animator[16];
     // Start is called before the first frame update
     void Start()
     {
+        for (int i = 0; i < spawners.Length; i++)
+        {
+            spawners[i] = Instantiate(original, spawnPoints[i], Quaternion.identity);
+            spawners[i].name = original.name;
+            spawnerAnimators[i] = spawners[i].GetComponent<Animator>();
+        }
         InvokeRepeating("Spawn", start, frequency);
     }
     void Spawn()
@@ -41,10 +48,7 @@ public class Spawner : MonoBehaviour
         interval = (rate * Time.timeSinceLevelLoad) + rateStart;
         interval = interval < 1.0f ? 1.0f : interval;
         //Debug.Log(interval);
-        position = spawnPoints[Random.Range(0, 16)];
-        GameObject newObject = Instantiate(original, position, Quaternion.identity);
-        newObject.name = original.name;
-        newObject.GetComponent<Rigidbody2D>().velocity = new Vector2(vx, 0f);
+        spawnerAnimators[Random.Range(0, 16)].SetTrigger("SpawnTrigger");
         Invoke("Spawn", interval);
     }
     // Update is called once per frame
