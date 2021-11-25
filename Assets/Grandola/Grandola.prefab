@@ -118,6 +118,7 @@ GameObject:
   - component: {fileID: 7930797569600284556}
   - component: {fileID: 7930797569600284557}
   - component: {fileID: 7930797569600284592}
+  - component: {fileID: -8029005570709239263}
   m_Layer: 0
   m_Name: Grandola
   m_TagString: Untagged
@@ -181,11 +182,11 @@ SpriteRenderer:
   m_SortingLayerID: -1052869115
   m_SortingLayer: -1
   m_SortingOrder: 1000
-  m_Sprite: {fileID: 21300000, guid: 670a6e663e94d374a86e88104e95d457, type: 3}
+  m_Sprite: {fileID: -7887866132679580608, guid: 670a6e663e94d374a86e88104e95d457, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 1
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -230,10 +231,10 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 0
+    drawMode: 1
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
@@ -251,6 +252,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581d63582aa37f54d9b6051ffd1dd8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &-8029005570709239263
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930797569600284555}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f7279ce675e3c8c46bc2252430fe57d9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7930797570166011827
 GameObject:
   m_ObjectHideFlags: 0

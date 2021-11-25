@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Grandola : MonoBehaviour
 {
-    // Object References
+    // Component References
     private Rigidbody2D rb;
+    private Animator animator;
+    private SpriteRenderer sr;
 
     // Object Properties
     private float jumpSpeed = 7f;
@@ -24,6 +26,8 @@ public class Grandola : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
         PlayerPrefs.SetInt("score", 0);
         PlayerPrefs.SetInt("combo", 1);
     }
@@ -40,10 +44,23 @@ public class Grandola : MonoBehaviour
 
         // input
 
-        if (Input.GetAxis("Horizontal") != 0f)
+        float inputX = Input.GetAxis("Horizontal");
+        if (inputX != 0f)
         {
-            vx = Input.GetAxis("Horizontal") * speed;
+            vx = inputX * speed;
             rb.AddForce(new Vector2(vx, 0.0f), ForceMode2D.Force);
+            if (!animator.GetBool("WalkBool")) animator.SetBool("WalkBool", true);
+            if (!sr.flipX && Mathf.Sign(inputX) == -1)
+            {
+                sr.flipX = true;
+            }
+            else if (sr.flipX && Mathf.Sign(inputX) == 1)
+            {
+                sr.flipX = false;
+            }
+        } else
+        {
+            if (animator.GetBool("WalkBool")) animator.SetBool("WalkBool", false);
         }
         if (Input.GetButtonDown("Jump") && jumpReady)
         {
@@ -51,6 +68,7 @@ public class Grandola : MonoBehaviour
             vy = jumpSpeed;
             rb.AddForce(new Vector2(0.0f, vy), ForceMode2D.Impulse);
             jumpReady = false;
+            animator.SetTrigger("JumpTrigger");
 
             // jump kill grasshopper
             if (grasshopper != null)
