@@ -5,10 +5,12 @@ using UnityEngine;
 public class Grasshopper : MonoBehaviour
 {
     private Animator animator;
+    private SpriteRenderer sr;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -21,6 +23,10 @@ public class Grasshopper : MonoBehaviour
         if (collision.gameObject.name == "Floor" || collision.gameObject.name == "WallLeft" || collision.gameObject.name == "WallRight")
         {
             animator.SetTrigger("JumpTrigger");
+        }
+        if (collision.gameObject.name == "WallLeft" || collision.gameObject.name == "WallRight")
+        {
+            sr.flipX = sr.flipX ? false : true;
         }
     }
 }
