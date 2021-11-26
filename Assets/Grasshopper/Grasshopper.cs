@@ -6,11 +6,13 @@ public class Grasshopper : MonoBehaviour
 {
     private Animator animator;
     private SpriteRenderer sr;
+    private AudioSource audioSource;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,5 +30,9 @@ public class Grasshopper : MonoBehaviour
         {
             sr.flipX = sr.flipX ? false : true;
         }
+    }
+    private void OnDestroy()
+    {
+        AudioSource.PlayClipAtPoint(audioSource.clip, gameObject.transform.position);
     }
 }
