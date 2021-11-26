@@ -9,6 +9,7 @@ public class Grandola : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer sr;
+    private AudioSource audioSource;
 
     // Object Properties
     private float jumpSpeed = 7f;
@@ -21,6 +22,7 @@ public class Grandola : MonoBehaviour
 
     // Controls
     private bool jumpReady = false;
+    private bool controlsDisabled = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,7 @@ public class Grandola : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         PlayerPrefs.SetInt("score", 0);
         PlayerPrefs.SetInt("combo", 1);
     }
@@ -43,46 +46,49 @@ public class Grandola : MonoBehaviour
         }
 
         // input
-
-        float inputX = Input.GetAxis("Horizontal");
-        if (inputX != 0f)
+        if (!controlsDisabled)
         {
-            vx = inputX * speed;
-            rb.AddForce(new Vector2(vx, 0.0f), ForceMode2D.Force);
-            if (!animator.GetBool("WalkBool")) animator.SetBool("WalkBool", true);
-            if (!sr.flipX && Mathf.Sign(inputX) == -1)
+            float inputX = Input.GetAxis("Horizontal");
+            if (inputX != 0f)
             {
-                sr.flipX = true;
+                vx = inputX * speed;
+                rb.AddForce(new Vector2(vx, 0.0f), ForceMode2D.Force);
+                if (!animator.GetBool("WalkBool")) animator.SetBool("WalkBool", true);
+                if (!sr.flipX && Mathf.Sign(inputX) == -1)
+                {
+                    sr.flipX = true;
+                }
+                else if (sr.flipX && Mathf.Sign(inputX) == 1)
+                {
+                    sr.flipX = false;
+                }
             }
-            else if (sr.flipX && Mathf.Sign(inputX) == 1)
+            else
             {
-                sr.flipX = false;
+                if (animator.GetBool("WalkBool")) animator.SetBool("WalkBool", false);
             }
-        } else
-        {
-            if (animator.GetBool("WalkBool")) animator.SetBool("WalkBool", false);
-        }
-        if (Input.GetButtonDown("Jump") && jumpReady)
-        {
-            // jump
-            vy = jumpSpeed;
-            rb.AddForce(new Vector2(0.0f, vy), ForceMode2D.Impulse);
-            jumpReady = false;
-            animator.SetTrigger("JumpTrigger");
+            if (Input.GetButtonDown("Jump") && jumpReady)
+            {
+                // jump
+                vy = jumpSpeed;
+                rb.AddForce(new Vector2(0.0f, vy), ForceMode2D.Impulse);
+                jumpReady = false;
+                animator.SetTrigger("JumpTrigger");
 
-            // jump kill grasshopper
-            if (grasshopper != null)
-            {
-                //Debug.Log("Kill");
-                Destroy(grasshopper);
-                int combo = PlayerPrefs.GetInt("combo");
-                PlayerPrefs.SetInt("combo", combo + 1);
-                int score = PlayerPrefs.GetInt("score");
-                PlayerPrefs.SetInt("score", score + (1 * combo));
-            }
+                // jump kill grasshopper
+                if (grasshopper != null)
+                {
+                    //Debug.Log("Kill");
+                    Destroy(grasshopper);
+                    int combo = PlayerPrefs.GetInt("combo");
+                    PlayerPrefs.SetInt("combo", combo + 1);
+                    int score = PlayerPrefs.GetInt("score");
+                    PlayerPrefs.SetInt("score", score + (1 * combo));
+                }
 
-            // always reset grasshopper on a jump
-            grasshopper = null;
+                // always reset grasshopper on a jump
+                grasshopper = null;
+            }
         }
 
         // post input
@@ -146,11 +152,15 @@ public class Grandola : MonoBehaviour
         if (!invulnerable && collision.gameObject.tag == "Hitbox")
         {
             //Debug.Log("Hit!");
-            death();
+            StartCoroutine(Death());
         }
     }
-    private void death()
+    IEnumerator Death()
     {
+        invulnerable = true;
+        controlsDisabled = true;
+        audioSource.Play();
+        yield return new WaitForSeconds(2.0f);
         SceneManager.LoadScene("Thankyou");
     }
 }
