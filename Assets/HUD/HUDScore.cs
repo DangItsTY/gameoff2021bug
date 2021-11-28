@@ -10,6 +10,6 @@ public class HUDScore : MonoBehaviour
     {
         Text text = GetComponent<Text>();
         int score = PlayerPrefs.GetInt("score");
-        text.text = "" + score;
+        text.text = "Score: " + score;
     }
 }

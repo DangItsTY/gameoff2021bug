@@ -10,6 +10,6 @@ public class HUDCombo : MonoBehaviour
     {
         Text text = GetComponent<Text>();
         int combo = PlayerPrefs.GetInt("combo");
-        text.text = "" + combo;
+        text.text = "Combo: " + combo;
     }
 }
