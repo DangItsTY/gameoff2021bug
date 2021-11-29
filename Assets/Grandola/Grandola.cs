@@ -79,7 +79,7 @@ public class Grandola : MonoBehaviour
                 if (grasshopper != null)
                 {
                     //Debug.Log("Kill");
-                    Destroy(grasshopper);
+                    grasshopper.BroadcastMessage("death");
                     int combo = PlayerPrefs.GetInt("combo");
                     PlayerPrefs.SetInt("combo", combo + 1);
                     int score = PlayerPrefs.GetInt("score");

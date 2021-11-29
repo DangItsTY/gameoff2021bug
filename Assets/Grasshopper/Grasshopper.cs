@@ -31,8 +31,9 @@ public class Grasshopper : MonoBehaviour
             sr.flipX = sr.flipX ? false : true;
         }
     }
-    private void OnDestroy()
+    public void death()
     {
         AudioSource.PlayClipAtPoint(audioSource.clip, gameObject.transform.position);
+        Destroy(gameObject);
     }
 }
