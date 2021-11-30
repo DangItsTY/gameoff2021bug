@@ -152,7 +152,7 @@ public class Grandola : MonoBehaviour
         if (!invulnerable && collision.gameObject.tag == "Hitbox")
         {
             //Debug.Log("Hit!");
-            StartCoroutine(Death());
+            //StartCoroutine(Death());
         }
     }
     IEnumerator Death()

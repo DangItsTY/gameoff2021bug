@@ -22,8 +22,8 @@ public class WindowAnimation : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        position.x += animator.gameObject.transform.position.x;
-        position.y += animator.gameObject.transform.position.y;
+        position.x = animator.gameObject.transform.position.x;
+        position.y = animator.gameObject.transform.position.y;
         GameObject newObject = Instantiate(original, position, Quaternion.identity);
         newObject.name = original.name;
         newObject.GetComponent<Rigidbody2D>().velocity = new Vector2(vx, 0f);
