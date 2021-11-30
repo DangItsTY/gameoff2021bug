@@ -5,9 +5,6 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject original;
-    public Vector2 position;
-    public float start;
-    public float frequency;
     public float rate = -5.0f / 180.0f;
     public float rateStart = 6.0f;
     private float interval;
@@ -40,11 +37,10 @@ public class Spawner : MonoBehaviour
             spawners[i].name = original.name;
             spawnerAnimators[i] = spawners[i].GetComponent<Animator>();
         }
-        InvokeRepeating("Spawn", start, frequency);
+        Invoke("Spawn", 0.0f);
     }
     void Spawn()
     {
-        CancelInvoke("Spawn");
         interval = (rate * Time.timeSinceLevelLoad) + rateStart;
         interval = interval < 1.0f ? 1.0f : interval;
         //Debug.Log(interval);
